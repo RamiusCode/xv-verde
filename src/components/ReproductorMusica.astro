@@ -1,0 +1,547 @@
+---
+// Musica.astro - CON TIMING INTELIGENTE
+---
+
+<!-- REPRODUCTOR DE MÚSICA CON TIMING INTELIGENTE -->
+<div class="w-full max-w-[350px] sm:max-w-sm mx-auto mt-12 sm:mt-16" id="music-player-container">
+  
+  <!-- Card principal con efecto glass -->
+  <div class="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden" id="player-card">
+    
+    <!-- Efecto de brillo de fondo -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[#4e684b]/10 via-transparent to-[#4e684b]/5 pointer-events-none"></div>
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-[#4e684b]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-32 h-32 bg-[#4e684b]/8 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <!-- Contenido del reproductor -->
+    <div class="relative z-10">
+
+      <!-- Título elegante -->
+      <div class="text-center mb-3" id="player-title">
+         <div class=" text-center z-30 mb-2 w-full" id="titulo-container">
+      <div class="flex items-center justify-center gap-5 sm:gap-4 md:gap-6 lg:gap-8 px-4">
+        
+        <!-- 🦋 MARIPOSA IZQUIERDA -->
+        <div id="mariposa-izq" class="flex-shrink-0">
+          <img
+            src="/gif/mariposaVerde.gif"
+            alt="Mariposa izquierda"
+            class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain"
+          />
+        </div>
+
+        <!-- TEXTO CENTRAL -->
+        <div id="titulo" class="flex-shrink-0">
+          <h3 class="font-great-vibes text-2xl sm:text-3xl text-[#4e684b] mb-2">Mi Canción Especial</h3>
+        </div>
+
+        <!-- 🦋 MARIPOSA DERECHA -->
+        <div id="mariposa-der" class="flex-shrink-0">
+          <img
+            src="/gif/mariposaVerde.gif"
+            alt="Mariposa derecha"
+            class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain transform scale-x-[-1]"
+          />
+        </div>
+      </div>
+    </div>
+        <p class="text-sm sm:text-base italic text-[#4e684b]/70 font-medium w-full whitespace-nowrap">
+          ✨ Una melodía para recordar siempre ✨
+        </p>
+      </div>
+
+      <!-- Controles principales -->
+      <div class="flex items-center justify-center space-x-8 sm:space-x-10 " id="controls-container">
+        
+        <!-- Botón anterior -->
+        <button id="prevBtn" 
+                class="text-[#4e684b]/60 hover:text-[#4e684b] transition-all duration-300 text-xl sm:text-2xl p-3 rounded-full hover:bg-white/20 transform hover:scale-110 focus:outline-none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 6v12l-2-2V8l2-2zm2 6l8-5v10l-8-5z"/>
+          </svg>
+        </button>
+
+        <!-- Botón principal corazón -->
+        <button id="playPauseBtn" 
+                class="relative text-[#4e684b] text-4xl sm:text-5xl transition-all duration-300 transform hover:scale-110 focus:outline-none group">
+          
+          <!-- Fondo del botón corazón -->
+          <div class="absolute inset-0 bg-gradient-to-br from-[#4e684b]/20 to-[#4e684b]/10 rounded-full blur-lg scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          <!-- Icono corazón -->
+          <div class="relative z-10 transform transition-all duration-300">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" class="drop-shadow-lg">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            
+            <!-- Icono play/pause superpuesto -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg id="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="white" class="drop-shadow-sm">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <svg id="pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="white" class="hidden drop-shadow-sm">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Partículas de corazón -->
+          <div class="absolute inset-0 pointer-events-none" id="heart-particles"></div>
+        </button>
+
+        <!-- Botón siguiente -->
+        <button id="nextBtn" 
+                class="text-[#4e684b]/60 hover:text-[#4e684b] transition-all duration-300 text-xl sm:text-2xl p-3 rounded-full hover:bg-white/20 transform hover:scale-110 focus:outline-none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 18V6l2 2v8l-2 2zm-2-6L7 7v10l8-5z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de progreso elegante -->
+      <div class="px-2 sm:px-4" id="progress-container">
+        <div class="flex items-center justify-between text-xs sm:text-sm text-[#4e684b]/60 mb-3 font-medium">
+          <span id="currentTime">0:00</span>
+          <span class="text-[#4e684b]/40">♪</span>
+          <span id="totalDuration">--:--</span>
+        </div>
+        
+        <!-- Barra de progreso personalizada -->
+        <div class="relative">
+          <input type="range" id="progressBar" value="0" max="100"
+                 class="w-full h-2 bg-gradient-to-r from-[#4e684b]/20 to-[#4e684b]/10 rounded-full appearance-none cursor-pointer slider-elegant">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Audio element -->
+<audio id="music-audio" preload="auto">
+  <source src="/audio/loscapos.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
+
+<!-- SCRIPTS CON TIMING INTELIGENTE -->
+<script>
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+let isPlaying = false;
+let currentTime = 0;
+let duration = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🎵 Iniciando reproductor con timing inteligente...');
+  
+  
+  // Configurar estado inicial (invisible)
+  gsap.set("#music-player-container", { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.9
+  });
+
+  // Configurar estado inicial de elementos internos
+  gsap.set("#player-title", { opacity: 0, y: 30 });
+  gsap.set("#controls-container", { opacity: 0, scale: 0.8 });
+  gsap.set("#progress-container", { opacity: 0, y: 20 });
+  gsap.set("#romantic-text", { opacity: 0 });
+
+  // SCROLLTRIGGER CON TIMING INTELIGENTE
+  gsap.to("#music-player-container", {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 1,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: "#music-player-container",
+      start: "top 90%",           
+      end: "top 30%",            
+      toggleActions: "play none none reverse",
+    onEnter: () => {
+    // TIMING ABSOLUTO DESDE CARGA DE PÁGINA
+    const TOTAL_WAIT_TIME = 5; // 3 segundos TOTALES desde que carga la página
+    const pageLoadTime = performance.timeOrigin;
+    const currentTime = performance.now();
+    const timePassedSinceLoad = currentTime / 1000; // En segundos
+    
+    if (timePassedSinceLoad < TOTAL_WAIT_TIME) {
+        // Aún no han pasado los segundos necesarios
+        const timeToWait = TOTAL_WAIT_TIME - timePassedSinceLoad;
+        console.log(`⏳ Reproductor esperando ${timeToWait.toFixed(1)}s más (total: ${TOTAL_WAIT_TIME}s desde carga)...`);
+        
+        gsap.delayedCall(timeToWait, () => {
+        console.log(`🎵 ¡${TOTAL_WAIT_TIME}s completados, reproductor aparece!`);
+        animatePlayerIn();
+        });
+    } else {
+        // Ya pasaron los segundos necesarios
+        console.log(`🎵 Ya pasaron ${TOTAL_WAIT_TIME}s, reproductor aparece inmediatamente`);
+        animatePlayerIn();
+    }
+    },
+      onLeave: () => console.log('🎵 Reproductor se oculta al bajar más'),
+      onEnterBack: () => {
+        console.log('🎵 Reproductor vuelve al subir');
+        animatePlayerIn();
+      },
+      onLeaveBack: () => {
+        console.log('🎵 Reproductor desaparece al subir');
+        resetPlayerElements();
+      }
+    }
+  });
+
+  // FUNCIÓN PARA ANIMAR LA ENTRADA DEL REPRODUCTOR
+  function animatePlayerIn() {
+    gsap.to("#player-title", {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.2
+    });
+    
+    gsap.to("#controls-container", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.6,
+      ease: "back.out(1.2)",
+      delay: 0.4
+    });
+    
+    gsap.to("#progress-container", {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.6
+    });
+    
+    gsap.to("#romantic-text", {
+      opacity: 0.8,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.8
+    });
+  }
+
+  // FUNCIÓN PARA RESETEAR ELEMENTOS
+  function resetPlayerElements() {
+    gsap.set("#player-title", { opacity: 0, y: 30 });
+    gsap.set("#controls-container", { opacity: 0, scale: 0.8 });
+    gsap.set("#progress-container", { opacity: 0, y: 20 });
+    gsap.set("#romantic-text", { opacity: 0 });
+  }
+
+  // EVENT LISTENERS
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressBar = document.getElementById('progressBar');
+
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', togglePlayPause);
+  }
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', previousTrack);
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', nextTrack);
+  }
+
+  if (progressBar) {
+    progressBar.addEventListener('input', seekAudio);
+  }
+
+  // OBTENER DURACIÓN REAL DEL AUDIO
+  const audioElement = document.getElementById('music-audio');
+  if (audioElement instanceof HTMLAudioElement) {
+    audioElement.addEventListener('loadedmetadata', () => {
+      duration = audioElement.duration;
+      updateTimeDisplay();
+      console.log(`Duración real: ${Math.floor(duration/60)}:${Math.floor(duration%60).toString().padStart(2, '0')}`);
+    });
+    
+    audioElement.addEventListener('canplaythrough', () => {
+      if (duration === 0 && audioElement.duration) {
+        duration = audioElement.duration;
+        updateTimeDisplay();
+      }
+    });
+  }
+});
+
+// FUNCIÓN PLAY/PAUSE
+function togglePlayPause() {
+  const audioElement = document.getElementById('music-audio');
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+  const heartBtn = document.getElementById('playPauseBtn');
+ 
+  if (!(audioElement instanceof HTMLAudioElement)) {
+    console.log('No se encontró el elemento de audio');
+    return;
+  }
+  
+  const audio = audioElement;
+ 
+  if (!isPlaying) {
+    audio.play().catch(error => console.log('Error al reproducir:', error));
+   
+    if (playIcon) playIcon.classList.add('hidden');
+    if (pauseIcon) pauseIcon.classList.remove('hidden');
+   
+    gsap.to(heartBtn, {
+      scale: 1.2,
+      duration: 0.2,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.out"
+    });
+   
+    createHeartParticles();
+   
+    isPlaying = true;
+    startProgress();
+   
+  } else {
+    audio.pause();
+   
+    if (playIcon) playIcon.classList.remove('hidden');
+    if (pauseIcon) pauseIcon.classList.add('hidden');
+   
+    isPlaying = false;
+  }
+}
+
+// CREAR PARTÍCULAS DE CORAZÓN
+function createHeartParticles() {
+  const container = document.getElementById('heart-particles');
+  if (!container) return;
+  
+  for (let i = 0; i < 6; i++) {
+    const particle = document.createElement('div');
+    particle.innerHTML = '💖';
+    particle.style.cssText = `
+      position: absolute;
+      font-size: 12px;
+      pointer-events: none;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    `;
+    
+    container.appendChild(particle);
+    
+    gsap.to(particle, {
+      opacity: 1,
+      scale: 1.5,
+      x: (Math.random() - 0.5) * 100,
+      y: (Math.random() - 0.5) * 100,
+      rotation: Math.random() * 360,
+      duration: 0.8,
+      ease: "power2.out",
+      delay: i * 0.1,
+      onComplete: () => {
+        gsap.to(particle, {
+          opacity: 0,
+          scale: 0.5,
+          duration: 0.4,
+          onComplete: () => particle.remove()
+        });
+      }
+    });
+  }
+}
+
+// FUNCIONES ADICIONALES
+function previousTrack() {
+  console.log('Canción anterior');
+  gsap.to("#prevBtn", {
+    scale: 1.2,
+    duration: 0.1,
+    yoyo: true,
+    repeat: 1
+  });
+}
+
+function nextTrack() {
+  console.log('Siguiente canción');
+  gsap.to("#nextBtn", {
+    scale: 1.2,
+    duration: 0.1,
+    yoyo: true,
+    repeat: 1
+  });
+}
+
+function seekAudio() {
+  const progressBarElement = document.getElementById('progressBar');
+  const audioElement = document.getElementById('music-audio');
+  
+  if (progressBarElement instanceof HTMLInputElement && 
+      audioElement instanceof HTMLAudioElement) {
+    
+    const value = Number(progressBarElement.value) || 0;
+    const seekTime = (value / 100) * audioElement.duration;
+    
+    audioElement.currentTime = seekTime;
+    currentTime = seekTime;
+    updateTimeDisplay();
+  }
+}
+
+function startProgress() {
+  const audioElement = document.getElementById('music-audio');
+  
+  if (!(audioElement instanceof HTMLAudioElement)) return;
+  
+  const interval = setInterval(() => {
+    if (!isPlaying) {
+      clearInterval(interval);
+      return;
+    }
+    
+    currentTime = audioElement.currentTime;
+    duration = audioElement.duration || duration;
+    
+    if (currentTime >= duration) {
+      isPlaying = false;
+      const playIcon = document.getElementById('play-icon');
+      const pauseIcon = document.getElementById('pause-icon');
+      if (playIcon) playIcon.classList.remove('hidden');
+      if (pauseIcon) pauseIcon.classList.add('hidden');
+      clearInterval(interval);
+    }
+    
+    updateProgress();
+  }, 100);
+}
+
+function updateProgress() {
+  const progressBarElement = document.getElementById('progressBar');
+  
+  if (progressBarElement instanceof HTMLInputElement) {
+    const progressBar = progressBarElement;
+    const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+    progressBar.value = progress.toString();
+  }
+  updateTimeDisplay();
+}
+
+function updateTimeDisplay() {
+  const currentTimeEl = document.getElementById('currentTime');
+  const totalDurationEl = document.getElementById('totalDuration');
+  const audioElement = document.getElementById('music-audio');
+  
+  if (audioElement instanceof HTMLAudioElement) {
+    if (currentTimeEl) {
+      const minutes = Math.floor(audioElement.currentTime / 60);
+      const seconds = Math.floor(audioElement.currentTime % 60);
+      currentTimeEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    if (totalDurationEl && audioElement.duration) {
+      const totalMinutes = Math.floor(audioElement.duration / 60);
+      const totalSeconds = Math.floor(audioElement.duration % 60);
+      totalDurationEl.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+    } else if (totalDurationEl && duration > 0) {
+      const totalMinutes = Math.floor(duration / 60);
+      const totalSeconds = Math.floor(duration % 60);
+      totalDurationEl.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, '0')}`;
+    }
+  }
+}
+</script>
+
+<style>
+#player-card {
+  backdrop-filter: blur(25px);
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 
+    0 25px 50px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.slider-elegant {
+  background: linear-gradient(to right, rgba(78, 104, 75, 0.3), rgba(78, 104, 75, 0.1));
+  outline: none;
+  border-radius: 15px;
+}
+
+.slider-elegant::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4e684b, #5a7662);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(78, 104, 75, 0.4);
+  border: 3px solid rgba(255,255,255,0.8);
+  transition: all 0.3s ease;
+}
+
+.slider-elegant::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 6px 16px rgba(78, 104, 75, 0.6);
+}
+
+.slider-elegant::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4e684b, #5a7662);
+  cursor: pointer;
+  border: 3px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 12px rgba(78, 104, 75, 0.4);
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(1.05); }
+  75% { transform: scale(1.15); }
+}
+
+#playPauseBtn:hover {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+button:not(#playPauseBtn):hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+#player-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(78, 104, 75, 0.1), transparent, rgba(78, 104, 75, 0.1));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#player-card:hover::before {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  #player-card {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+</style>

@@ -1,0 +1,322 @@
+<section
+  class="relative flex items-center justify-center bg-white text-black"
+>
+  <!-- FLOR ESQUINA SUPERIOR IZQUIERDA -->
+  <div class="absolute top-0 left-0 z-20" id="flor-izquierda">
+    <img
+      src="/imagenes/FlorIzquierda.png"
+      alt="Flores izquierda"
+      class="w-44 h-auto sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40 object-contain"
+    />
+  </div>
+
+  <!-- FLOR ESQUINA SUPERIOR DERECHA -->
+  <div class="absolute top-0 right-0 z-20" id="flor-derecha">
+    <img
+      src="/imagenes/FlorDerecha.png"
+      alt="Flores derecha"
+      class="w-44 h-auto sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40 object-contain"
+    />
+  </div>
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="text-center px-4 z-10 max-w-4xl w-full pt-16">
+    <!-- CORONA EN EL MEDIO -->
+    <div class="relative mx-auto w-fit mb-4" id="corona">
+      <img
+        src="/imagenes/CORONA.png"
+        alt="Corona de quinceañera"
+        class="w-24 h-auto sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 object-contain mx-auto"
+      />
+    </div>
+
+   <!-- TEXTO "MIS XV AÑOS" CON MARIPOSAS RESPONSIVE -->
+    <div class="relative text-center z-30 mb-6 w-full" id="titulo-container">
+      <div class="flex items-center justify-center gap-5 sm:gap-4 md:gap-6 lg:gap-8 px-4">
+        
+        <!-- 🦋 MARIPOSA IZQUIERDA -->
+        <div id="mariposa-izq" class="flex-shrink-0">
+          <img
+            src="/gif/mariposaVerde.gif"
+            alt="Mariposa izquierda"
+            class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain"
+          />
+        </div>
+
+        <!-- TEXTO CENTRAL -->
+        <div id="titulo" class="flex-shrink-0">
+          <h1 class="font-crimson text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#4e684b] font-semibold tracking-wider whitespace-nowrap">
+            MIS XV AÑOS
+          </h1>
+        </div>
+
+        <!-- 🦋 MARIPOSA DERECHA -->
+        <div id="mariposa-der" class="flex-shrink-0">
+          <img
+            src="/gif/mariposaVerde.gif"
+            alt="Mariposa derecha"
+            class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain transform scale-x-[-1]"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- NOMBRE DE LA QUINCEAÑERA -->
+    <div class="relative w-full text-center z-30 mb-8" id="nombre-container">
+      <h2 class="font-great-vibes text-7xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-[#4e684b] tracking-wide" id="nombre-typewriter">
+        <!-- Las letras se crearán dinámicamente -->
+      </h2>
+    </div>
+
+ <!-- 📸 CONTENEDOR DE FOTOS -->
+<div class="relative w-full z-30" id="foto-container">
+  <div class="relative w-full">
+    
+    <!-- 📸 IMAGEN 1 (Base - Quinceañera) -->
+    <div class="relative w-full">
+      <img
+        src="/imagenes/Quinceañera.png"
+        alt="Foto de quinceañera"
+        class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
+        id="foto-quinceañera"
+      />
+    </div>
+
+    <!-- 📸 IMAGEN 2 (Encima - Flores) -->
+    <div class="absolute top-[230px] left-0 w-full h-full pointer-events-none">
+      <img
+        src="../imagenes/FloresQuinceañera.png"
+        alt="Flores decorativas"
+        class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
+        id="foto-flores"
+      />
+    </div>
+
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- ANIMACIONES GSAP -->
+<script>
+import { gsap } from 'gsap';
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Iniciando todas las animaciones al mismo tiempo...');
+   
+    // 🌸 Animación flor izquierda
+    gsap.fromTo("#flor-izquierda",
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: "power2.out" }
+    );
+   
+    // 🌸 Animación flor derecha
+    gsap.fromTo("#flor-derecha",
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: "power2.out" }
+    );
+       
+    // 👑 Animación para la corona
+    gsap.fromTo("#corona",
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.2)" }
+    );
+
+    // 📝 Animación para "MIS XV AÑOS"
+    gsap.fromTo("#titulo",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+    );
+
+    // 🦋 MARIPOSA IZQUIERDA
+    gsap.fromTo("#mariposa-izq",
+        { 
+            opacity: 0, 
+            x: -100,
+            y: -20,
+            rotation: -10,
+            scale: 0.8 
+        },
+        { 
+            opacity: 1, 
+            x: 0,
+            y: 0, 
+            rotation: 0, 
+            scale: 1,
+            duration: 3,
+            ease: "power2.out"
+        }
+    );
+
+    // 🦋 MARIPOSA DERECHA
+    gsap.fromTo("#mariposa-der",
+        { 
+            opacity: 0, 
+            x: 100,
+            y: -15,
+            rotation: 10,
+            scale: 0.8 
+        },
+        { 
+            opacity: 1, 
+            x: 0,
+            y: 0, 
+            rotation: 0, 
+            scale: 1,
+            duration: 3,
+            ease: "power2.out"
+        }
+    );
+
+    // ✨ EFECTO DE ALETEO CONTINUO
+    gsap.to("#mariposa-izq", {
+        y: -10,
+        rotation: 2,
+        duration: 1.5,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+    });
+
+    gsap.to("#mariposa-der", {
+        y: -10,
+        rotation: -2,
+        duration: 1.5,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1
+    });
+
+    // 🎭 EFECTO CASCADA PARA NOMBRE
+    function nombreCascadaElegante() {
+        const texto = "Cataleya";
+        const contenedor = document.getElementById("nombre-typewriter");
+        if (!contenedor) return;
+        
+        contenedor.innerHTML = texto.split('').map((letra, index) => 
+            `<span class="letra-cascada" style="
+                --i: ${index};
+                opacity: 0; 
+                display: inline-block; 
+                transform: translateY(30px) scale(0.8);
+                filter: blur(2px);
+            ">${letra}</span>`
+        ).join('');
+        
+        gsap.set("#nombre-container", { opacity: 1 });
+        
+        gsap.to(".letra-cascada", {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.8,
+            ease: "back.out(1.6)",
+            stagger: {
+                each: 0.12,
+                from: "start"
+            },
+            onComplete: function() {
+                gsap.to(".letra-cascada", {
+                    y: -2,
+                    duration: 0.4,
+                    ease: "power2.inOut",
+                    stagger: 0.05,
+                    yoyo: true,
+                    repeat: 1
+                });
+            }
+        });
+        
+        gsap.to(".letra-cascada", {
+            textShadow: "0 0 8px rgba(78, 104, 75, 0.4)",
+            duration: 0.3,
+            ease: "power2.inOut",
+            stagger: 0.1,
+            delay: 0.8,
+            yoyo: true,
+            repeat: 1
+        });
+    }
+
+    // 📸 Animación para la imagen
+    gsap.fromTo("#foto-container",
+        {
+            opacity: 0,
+            scale: 0.8,
+            y: 30
+        },
+        {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1.2,
+            ease: "power2.out"
+        }
+    );
+
+    nombreCascadaElegante();
+   
+    console.log('Todas las animaciones iniciadas!');
+});
+</script>
+
+<style>
+.letra-cascada {
+    transition: all 0.3s ease;
+    will-change: transform, opacity, filter;
+    position: relative;
+}
+
+.letra-cascada:hover {
+    transform: translateY(-3px) scale(1.05) !important;
+    text-shadow: 0 0 12px rgba(78, 104, 75, 0.5) !important;
+    transition: all 0.2s ease;
+}
+
+#nombre-typewriter:hover .letra-cascada {
+    animation: gentleFloat 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+}
+
+#nombre-container:hover .letra-cascada {
+    animation: ondaElegante 1.5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.1s);
+}
+
+@keyframes ondaElegante {
+    0%, 100% { 
+        transform: translateY(0px) scale(1);
+        text-shadow: 0 0 5px rgba(78, 104, 75, 0.2);
+    }
+    50% { 
+        transform: translateY(-4px) scale(1.02);
+        text-shadow: 0 0 10px rgba(78, 104, 75, 0.4);
+    }
+}
+
+.letra-cascada::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: radial-gradient(circle, rgba(78, 104, 75, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.letra-cascada:hover::before {
+    opacity: 1;
+}
+</style>
