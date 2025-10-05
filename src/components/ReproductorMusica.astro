@@ -21,10 +21,10 @@
          <div class=" text-center z-30 mb-2 w-full" id="titulo-container">
       <div class="flex items-center justify-center gap-5 sm:gap-4 md:gap-6 lg:gap-8 px-4">
         
-        <!-- 🦋 MARIPOSA IZQUIERDA -->
+        <!-- MARIPOSA IZQUIERDA -->
         <div id="mariposa-izq" class="flex-shrink-0">
           <img
-            src="/gif/mariposaVerde.gif"
+            src={`${import.meta.env.BASE_URL}/gif/mariposaVerde.gif`}
             alt="Mariposa izquierda"
             class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain"
           />
@@ -35,10 +35,10 @@
           <h3 class="font-great-vibes text-2xl sm:text-3xl text-[#4e684b] mb-2">Mi Canción Especial</h3>
         </div>
 
-        <!-- 🦋 MARIPOSA DERECHA -->
+        <!-- MARIPOSA DERECHA -->
         <div id="mariposa-der" class="flex-shrink-0">
           <img
-            src="/gif/mariposaVerde.gif"
+            src={`${import.meta.env.BASE_URL}/gif/mariposaVerde.gif`}
             alt="Mariposa derecha"
             class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain transform scale-x-[-1]"
           />
@@ -118,7 +118,7 @@
 
 <!-- Audio element -->
 <audio id="music-audio" preload="auto">
-  <source src="/audio/loscapos.mp3" type="audio/mpeg">
+  <source src={`${import.meta.env.BASE_URL}/audio/loscapos.mp3`} type="audio/mpeg">
   Tu navegador no soporta audio HTML5.
 </audio>
 
