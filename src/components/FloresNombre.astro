@@ -1,10 +1,14 @@
+---
+// src/components/FloresNombre.astro
+---
+
 <section
   class="relative flex items-center justify-center bg-white text-black"
 >
   <!-- FLOR ESQUINA SUPERIOR IZQUIERDA -->
   <div class="absolute top-0 left-0 z-20" id="flor-izquierda">
     <img
-      src="/imagenes/FlorIzquierda.png"
+      src={`${import.meta.env.BASE_URL}imagenes/FlorIzquierda.png`}
       alt="Flores izquierda"
       class="w-44 h-auto sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40 object-contain"
     />
@@ -13,7 +17,7 @@
   <!-- FLOR ESQUINA SUPERIOR DERECHA -->
   <div class="absolute top-0 right-0 z-20" id="flor-derecha">
     <img
-      src="/imagenes/FlorDerecha.png"
+      src={`${import.meta.env.BASE_URL}imagenes/FlorDerecha.png`}
       alt="Flores derecha"
       class="w-44 h-auto sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40 object-contain"
     />
@@ -24,7 +28,7 @@
     <!-- CORONA EN EL MEDIO -->
     <div class="relative mx-auto w-fit mb-4" id="corona">
       <img
-        src="/imagenes/CORONA.png"
+        src={`${import.meta.env.BASE_URL}imagenes/CORONA.png`}
         alt="Corona de quinceañera"
         class="w-24 h-auto sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 object-contain mx-auto"
       />
@@ -34,10 +38,10 @@
     <div class="relative text-center z-30 mb-6 w-full" id="titulo-container">
       <div class="flex items-center justify-center gap-5 sm:gap-4 md:gap-6 lg:gap-8 px-4">
         
-        <!-- 🦋 MARIPOSA IZQUIERDA -->
+        <!-- MARIPOSA IZQUIERDA -->
         <div id="mariposa-izq" class="flex-shrink-0">
           <img
-            src="/gif/mariposaVerde.gif"
+            src={`${import.meta.env.BASE_URL}gif/mariposaVerde.gif`}
             alt="Mariposa izquierda"
             class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain"
           />
@@ -50,10 +54,10 @@
           </h1>
         </div>
 
-        <!-- 🦋 MARIPOSA DERECHA -->
+        <!-- MARIPOSA DERECHA -->
         <div id="mariposa-der" class="flex-shrink-0">
           <img
-            src="/gif/mariposaVerde.gif"
+            src={`${import.meta.env.BASE_URL}gif/mariposaVerde.gif`}
             alt="Mariposa derecha"
             class="w-12 h-auto sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain transform scale-x-[-1]"
           />
@@ -68,68 +72,67 @@
       </h2>
     </div>
 
- <!-- 📸 CONTENEDOR DE FOTOS -->
-<div class="relative w-full z-30" id="foto-container">
-  <div class="relative w-full">
-    
-    <!-- 📸 IMAGEN 1 (Base - Quinceañera) -->
-    <div class="relative w-full">
-      <img
-        src="/imagenes/Quinceañera.png"
-        alt="Foto de quinceañera"
-        class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
-        id="foto-quinceañera"
-      />
-    </div>
+    <!-- CONTENEDOR DE FOTOS -->
+    <div class="relative w-full z-30" id="foto-container">
+      <div class="relative w-full">
+        
+        <!-- IMAGEN 1 (Base - Quinceañera) -->
+        <div class="relative w-full">
+          <img
+            src={`${import.meta.env.BASE_URL}imagenes/Quinceañera.png`}
+            alt="Foto de quinceañera"
+            class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
+            id="foto-quinceañera"
+          />
+        </div>
 
-    <!-- 📸 IMAGEN 2 (Encima - Flores) -->
-    <div class="absolute top-[230px] left-0 w-full h-full pointer-events-none">
-      <img
-        src="../imagenes/FloresQuinceañera.png"
-        alt="Flores decorativas"
-        class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
-        id="foto-flores"
-      />
-    </div>
+        <!-- IMAGEN 2 (Encima - Flores) -->
+        <div class="absolute top-[230px] left-0 w-full h-full pointer-events-none">
+          <img
+            src={`${import.meta.env.BASE_URL}imagenes/FloresQuinceañera.png`}
+            alt="Flores decorativas"
+            class="w-[70vw] max-w-none h-auto sm:w-[95vw] md:w-[85vw] lg:w-[70vw] xl:w-[55vw] object-contain mx-auto"
+            id="foto-flores"
+          />
+        </div>
 
-  </div>
-</div>
+      </div>
+    </div>
 
   </div>
 </section>
 
-<!-- ANIMACIONES GSAP -->
 <script>
 import { gsap } from 'gsap';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Iniciando todas las animaciones al mismo tiempo...');
    
-    // 🌸 Animación flor izquierda
+    // Animación flor izquierda
     gsap.fromTo("#flor-izquierda",
         { opacity: 0 },
         { opacity: 1, duration: 1, ease: "power2.out" }
     );
    
-    // 🌸 Animación flor derecha
+    // Animación flor derecha
     gsap.fromTo("#flor-derecha",
         { opacity: 0 },
         { opacity: 1, duration: 1, ease: "power2.out" }
     );
        
-    // 👑 Animación para la corona
+    // Animación para la corona
     gsap.fromTo("#corona",
         { opacity: 0, scale: 0.5 },
         { opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.2)" }
     );
 
-    // 📝 Animación para "MIS XV AÑOS"
+    // Animación para "MIS XV AÑOS"
     gsap.fromTo("#titulo",
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
     );
 
-    // 🦋 MARIPOSA IZQUIERDA
+    // MARIPOSA IZQUIERDA
     gsap.fromTo("#mariposa-izq",
         { 
             opacity: 0, 
@@ -149,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
-    // 🦋 MARIPOSA DERECHA
+    // MARIPOSA DERECHA
     gsap.fromTo("#mariposa-der",
         { 
             opacity: 0, 
@@ -169,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
-    // ✨ EFECTO DE ALETEO CONTINUO
+    // EFECTO DE ALETEO CONTINUO
     gsap.to("#mariposa-izq", {
         y: -10,
         rotation: 2,
@@ -188,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         repeat: -1
     });
 
-    // 🎭 EFECTO CASCADA PARA NOMBRE
+    // EFECTO CASCADA PARA NOMBRE
     function nombreCascadaElegante() {
         const texto = "Cataleya";
         const contenedor = document.getElementById("nombre-typewriter");
@@ -240,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 📸 Animación para la imagen
+    // Animación para la imagen
     gsap.fromTo("#foto-container",
         {
             opacity: 0,
